@@ -1,4 +1,6 @@
 import 'package:ccpd_application/Controllers/APICalls.dart';
+import 'package:ccpd_application/Controllers/Utils.dart';
+import 'package:ccpd_application/ReusableComponents/FormFields.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +13,7 @@ class JobPosting extends StatefulWidget {
 }
 
 class _JobPostingState extends State<JobPosting> {
+
   final companyName = TextEditingController();
   final jobProfile = TextEditingController();
   final jobDescription = TextEditingController();
@@ -31,7 +34,7 @@ class _JobPostingState extends State<JobPosting> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 30, bottom: 55),
+                padding: const EdgeInsets.only(top: 50, bottom: 40),
                 child: Row(
                   children: [
                     Text(
@@ -42,72 +45,28 @@ class _JobPostingState extends State<JobPosting> {
                   ],
                 ),
               ),
-              Text(
-                'Company Name',
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              TextField(
-                controller: companyName,
-                decoration: InputDecoration(),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Job Profile ',
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              TextField(
-                controller: jobProfile,
-                decoration: InputDecoration(),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Job Description ',
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              TextField(
-                controller: jobDescription,
-                decoration: InputDecoration(),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Expected CTC ',
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              TextField(
-                keyboardType: TextInputType.number,
-                controller: expectedCTC,
-                decoration: InputDecoration(),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Registration Link ',
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              TextField(
-                controller: registrationLink,
-                decoration: InputDecoration(),
-              ),
-              SizedBox(
-                height: 20,
-              ),
+              formField(
+                  Heading: "Company Name",
+                  controller: companyName,
+                  numericalKeyboard: false),
+              formField(
+                  Heading: "Job Profile",
+                  controller: jobProfile,
+                  numericalKeyboard: false),
+              formField(
+                  Heading: "Job Description",
+                  controller: jobDescription,
+                  numericalKeyboard: false),
+              formField(
+                  Heading: "Expected CTC",
+                  controller: expectedCTC,
+                  numericalKeyboard: true),
+              formField(
+                  Heading: "Registration Link",
+                  controller: registrationLink,
+                  numericalKeyboard: false),
+
+              // Registration End Date
               Text(
                 'Registration End Date ',
               ),
@@ -123,7 +82,6 @@ class _JobPostingState extends State<JobPosting> {
                       initialDate: DateTime.now(),
                       firstDate: DateTime(DateTime.now().year - 5),
                       lastDate: DateTime(2101));
-
                   if (pickedDate != null) {
                     setState(() {
                       registrationEndDate.text =
@@ -135,6 +93,8 @@ class _JobPostingState extends State<JobPosting> {
               SizedBox(
                 height: 20,
               ),
+
+              // Upload Document
               Text("Upload Document"),
               SizedBox(
                 height: 15,
@@ -159,45 +119,63 @@ class _JobPostingState extends State<JobPosting> {
               SizedBox(
                 height: 20,
               ),
+
+
+              // discard and save buttons
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    width: 130,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 2,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Discard',
-                        style: TextStyle(
+                  GestureDetector(
+                    onTap: () {
+                      companyName.clear();
+                      jobProfile.clear();
+                      jobDescription.clear();
+                      expectedCTC.clear();
+                      registrationLink.clear();
+                      registrationEndDate.clear();
+                      setState(() {
+                        pickedFile = null;
+                        documentSelected = false;
+                      });
+                    },
+                    child: Container(
+                      width: 130,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
                           color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          width: 2,
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Discard',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
                   ),
                   GestureDetector(
                     onTap: () async {
-                      // String jDLink = "www.google.com";
-                      String jDLink =
-                          await APICalls().getTheJDLink(file: pickedFile);
-                      await APICalls.postTheJob(
-                          companyName: companyName.text,
-                          jobProfile: jobProfile.text,
-                          jobDescription: jobDescription.text,
-                          expectedCTC: expectedCTC.text,
-                          registrationLink: registrationLink.text,
-                          jDLink:
-                              jDLink, // TODO: generate a link through firebase
-                          registrationEndDate: registrationEndDate.text);
+                      if (validateInput()) {
+                        String jDLink =
+                            await APICalls().getTheJDLink(file: pickedFile);
+                        await APICalls.postTheJob(
+                            companyName: companyName.text,
+                            jobProfile: jobProfile.text,
+                            jobDescription: jobDescription.text,
+                            expectedCTC: expectedCTC.text,
+                            registrationLink: registrationLink.text,
+                            jDLink:
+                                jDLink, // TODO: generate a link through firebase
+                            registrationEndDate: registrationEndDate.text);
+                      }
                     },
                     child: Container(
                       width: 130,
@@ -239,5 +217,31 @@ class _JobPostingState extends State<JobPosting> {
       documentSelected = true;
       pickedFile = result.files.first;
     });
+  }
+
+  bool validateInput() {
+    if (companyName.text.isEmpty) {
+      Utils.toastMessage("Company Name cannot be empty");
+      return false;
+    } else if (jobProfile.text.isEmpty) {
+      Utils.toastMessage("Job Profile cannot be empty");
+      return false;
+    } else if (jobDescription.text.isEmpty) {
+      Utils.toastMessage("Job Description cannot be empty");
+      return false;
+    } else if (expectedCTC.text.isEmpty) {
+      Utils.toastMessage("Expected CTC cannot be empty");
+      return false;
+    } else if (registrationLink.text.isEmpty) {
+      Utils.toastMessage("Registration Link cannot be empty");
+      return false;
+    } else if (registrationEndDate.text.isEmpty) {
+      Utils.toastMessage("Registration End Date cannot be empty");
+      return false;
+    } else if (pickedFile == null) {
+      Utils.toastMessage("Please select a document");
+      return false;
+    }
+    return true;
   }
 }
