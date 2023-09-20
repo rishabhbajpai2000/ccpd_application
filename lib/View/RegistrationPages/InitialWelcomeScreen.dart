@@ -1,25 +1,24 @@
-import 'package:ccpd_application/View/Registration%20Pages/signUp.dart';
+import 'package:ccpd_application/View/RegistrationPages/SignUp.dart';
+import 'package:ccpd_application/View/RegistrationPages/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:ccpd_application/main.dart';
 
-class initial_welcome_screen extends StatefulWidget {
-  const initial_welcome_screen({super.key});
+class InitialWelcomeScreen extends StatefulWidget {
+  const InitialWelcomeScreen({super.key});
 
   @override
-  State<initial_welcome_screen> createState() => _initial_welcome_screenState();
+  State<InitialWelcomeScreen> createState() => _InitialWelcomeScreenState();
 }
 
-class _initial_welcome_screenState extends State<initial_welcome_screen> {
+class _InitialWelcomeScreenState extends State<InitialWelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -29,21 +28,21 @@ class _initial_welcome_screenState extends State<initial_welcome_screen> {
                       fontSize: 25,
                       fontWeight: FontWeight.w700,
                     )),
-                Stack(
-                    alignment: Alignment.topRight,
-                    children: [
-                      Image.asset(
-                        "assets/abes_logo.png",
-                        width: 100, // Adjust the width as needed
-                        height: 100, // Adjust the height as needed
-                      ),]),
+                Stack(alignment: Alignment.topRight, children: [
+                  Image.asset(
+                    "assets/abes_logo.png",
+                    width: 100, // Adjust the width as needed
+                    height: 100, // Adjust the height as needed
+                  ),
+                ]),
               ],
             ),
             SizedBox(
               height: 30,
             ),
             ClipRRect(
-              borderRadius: BorderRadius.circular(20), // Adjust the border radius as needed
+              borderRadius: BorderRadius.circular(
+                  20), // Adjust the border radius as needed
               child: Image.asset(
                 "assets/initial_screen_image.jpeg",
                 fit: BoxFit.cover,
@@ -72,7 +71,8 @@ class _initial_welcome_screenState extends State<initial_welcome_screen> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => signUpPage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SignUpPage()));
               },
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.6,
@@ -92,12 +92,11 @@ class _initial_welcome_screenState extends State<initial_welcome_screen> {
                 ),
               ),
             ),
-
             SizedBox(height: 20),
             GestureDetector(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => signUpPage()));
+                    MaterialPageRoute(builder: (context) => loginPage()));
               },
               child: Text(
                 "ALREADY HAVE AN ACCOUNT? LOG IN",

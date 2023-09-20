@@ -2,6 +2,7 @@ import 'package:ccpd_application/Controllers/APICalls.dart';
 import 'package:ccpd_application/Controllers/Utils.dart';
 import 'package:ccpd_application/ReusableComponents/FormFields.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -33,16 +34,19 @@ class _JobPostingState extends State<JobPosting> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 50, bottom: 40),
-                child: Row(
-                  children: [
-                    Text(
-                      'Post a Job',
-                      style:
-                          TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-                    ),
-                  ],
+              GestureDetector(
+                onTap: logout,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 50, bottom: 40),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Post a Job',
+                        style:
+                            TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               formField(
@@ -243,5 +247,18 @@ class _JobPostingState extends State<JobPosting> {
       return false;
     }
     return true;
+  }
+    void logout() async {
+    try {
+      // Sign the user out using FirebaseAuth
+      await FirebaseAuth.instance.signOut();
+
+      // Navigate to the login screen after successful logout
+      Navigator.pushNamedAndRemoveUntil(
+          context, 'initial_Welcome_Screen', (route) => false);
+    } catch (e) {
+      // Handle any potential errors during the logout process
+      print('Error during logout: $e');
+    }
   }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "763792000427",
+    "project_id": "ccpd-d8239",
+    "storage_bucket": "ccpd-d8239.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763792000427:android:13b50fad1b698c1a297eee",
+        "android_client_info": {
+          "package_name": "com.example.ccpd_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrhDIiZISYvCHxm608KtbpElcKvh7TEe0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
