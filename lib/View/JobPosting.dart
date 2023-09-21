@@ -14,7 +14,6 @@ class JobPosting extends StatefulWidget {
 }
 
 class _JobPostingState extends State<JobPosting> {
-
   final companyName = TextEditingController();
   final jobProfile = TextEditingController();
   final jobDescription = TextEditingController();
@@ -30,20 +29,26 @@ class _JobPostingState extends State<JobPosting> {
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
+          padding: const EdgeInsets.fromLTRB(30, 0, 30, 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               GestureDetector(
                 onTap: logout,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 50, bottom: 40),
+                  padding: const EdgeInsets.only(top: 40, bottom: 40),
                   child: Row(
                     children: [
                       Text(
                         'Post a Job',
-                        style:
-                            TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 35, fontWeight: FontWeight.bold),
+                      ),
+                      Expanded(child: Container()),
+                      Image.asset(
+                        "assets/abes_logo.png",
+                        width: 100, // Adjust the width as needed
+                        height: 100, // Adjust the height as needed
                       ),
                     ],
                   ),
@@ -123,7 +128,6 @@ class _JobPostingState extends State<JobPosting> {
               SizedBox(
                 height: 20,
               ),
-
 
               // discard and save buttons
               Row(
@@ -248,7 +252,8 @@ class _JobPostingState extends State<JobPosting> {
     }
     return true;
   }
-    void logout() async {
+
+  void logout() async {
     try {
       // Sign the user out using FirebaseAuth
       await FirebaseAuth.instance.signOut();

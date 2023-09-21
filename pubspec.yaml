@@ -43,6 +43,7 @@ dependencies:
   cloud_firestore: ^4.9.2
   firebase_core: ^2.16.0
   firebase_storage: ^11.2.7
+  animated_bottom_navigation_bar: ^1.2.1
 
 dev_dependencies:
   flutter_test:

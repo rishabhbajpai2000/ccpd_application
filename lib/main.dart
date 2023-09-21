@@ -1,3 +1,4 @@
+import 'package:ccpd_application/View/HomePage.dart';
 import 'package:ccpd_application/View/JobPosting.dart';
 import 'package:ccpd_application/View/RegistrationPages/InitialWelcomeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,7 +19,7 @@ void isLogin() {
   final user = auth.currentUser;
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: user == null ? InitialWelcomeScreen() : JobPosting(),
+    home: user == null ? InitialWelcomeScreen() : HomePage(),
     routes: {
       'initial_Welcome_Screen': (context) => InitialWelcomeScreen(),
     },
